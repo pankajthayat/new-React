@@ -8,7 +8,9 @@ const App=(props)=>{
     const [state,setState]=useState({count:props.count, text: props.text})
 
     const increment=()=>{
-        setState({count:state.count+1})
+        setState({count:state.count+1})// if we do this way it will change the state...and we will losse text
+        // a work around to this is ...state,count:state.count... distructure the state and update the property
+        // but this is not recommanded .... use useState for multiple useState for multiple property like the previous example(this is recommanded to use)
     }
     
     return(<div>
