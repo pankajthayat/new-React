@@ -3,15 +3,73 @@ import ReactDOM from 'react-dom';
 
 import * as serviceWorker from './serviceWorker';
 
+const Notes=()=>{
+
+    const [notes,setNotes]=useState([]);
+    const [note,setNote]=useState("");
+    const [body,setBody]=useState("")
+
+    const handleOnSubmit=(e,title,body)=>{
+        e.preventDefault()
+        setNotes([
+            ...notes,
+            {title,body}
+        ])
+        setNote("");
+        setBody("")
+    }
+
+    return(
+        <div>
+        <p>Notes</p>
+        {notes.map((note,i)=>{
+            return(<p key ={i}>{note.title+"  :  "+note.body}</p>)
+        })}
+        <p>Add Note</p>
+        <form onSubmit={(e)=>{handleOnSubmit(e,note,body)}}>
+        <input value={note} onChange={(e)=>{
+            setNote(e.target.value)
+             }
+             }></input>
+        <textarea value={body} onChange={(e)=>{setBody(e.target.value)}}>decription</textarea>
+        <button>Add</button>
+        </form>
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const App=(props)=>{
     
-    const [state,setState]=useState({count:props.count, text: props.text})
+    const [state,setState]=useState({
+        count:props.count, 
+        text: props.text
+    })
 
     const increment=()=>{
         setState({count:state.count+1})// if we do this way it will change the state...and we will losse text
         // a work around to this is ...state,count:state.count... distructure the state and update the property
         // but this is not recommanded .... use useState for multiple useState for multiple property like the previous example(this is recommanded to use)
-    }
+        //use state has diff behaviour than state
+}
     
     return(<div>
     <p>the {state.text || "count"} is {state.count}</p>
@@ -22,6 +80,9 @@ const App=(props)=>{
     </div>)
 }
 
+App.defaultProps={
+    count:0
+}
 
 
 /*const App=(props)=>{
@@ -41,7 +102,7 @@ const App=(props)=>{
 }*/
 
 
-ReactDOM.render(<App count ={0}></App>, document.getElementById('root'));
+ReactDOM.render(<Notes></Notes>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
