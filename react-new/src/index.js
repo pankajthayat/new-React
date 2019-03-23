@@ -1,13 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 
 import * as serviceWorker from './serviceWorker';
 
 const Notes=()=>{
 
-    const [notes,setNotes]=useState([]);
+            let notesArray = JSON.parse(localStorage.getItem("notes"));
+        console.log("notes Array : ", notesArray, " loc : ", localStorage.getItem("notes"), "typeof : ", typeof(notesArray));
+        // setNotes(notesArray);
+    const [notes,setNotes]=useState(notesArray || []);
     const [note,setNote]=useState("");
     const [body,setBody]=useState("")
+
+    useEffect(()=>{
+        console.log("use effact running")
+       
+         localStorage.setItem("notes",JSON.stringify(notes));
+
+    })
 
     const handleOnSubmit=(e,title,body)=>{
         e.preventDefault()
@@ -22,6 +32,7 @@ const Notes=()=>{
     return(
         <div>
         <p>Notes</p>
+        {console.log("notes : ", notes)}
         {notes.map((note,i)=>{
             return(<p key ={i}>{note.title+"  :  "+note.body}</p>)
         })}
